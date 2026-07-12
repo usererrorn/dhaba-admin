@@ -1,11 +1,17 @@
 from django.db import models
 
 class MenuItem(models.Model):
+    PAGE_CHOICES = [
+        ('truck', 'Truck Menu'),
+        ('family', 'Family Menu'),
+        ('both', 'Both Pages'),
+    ]
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     image = models.ImageField(upload_to='menu_images/', blank=True, null=True)
     is_signature_dish = models.BooleanField(default=False)
+    page = models.CharField(max_length=10, choices=PAGE_CHOICES, default='both')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -45,9 +51,9 @@ class SiteInfo(models.Model):
 
 
 class FacilityBadge(models.Model):
-    emoji = models.CharField(max_length=10, help_text="Jaise 🛣️ ya 👨‍👩‍👧‍👦")
-    label = models.CharField(max_length=100, help_text="Jaise 'National Highway • Open 24/7'")
-    order = models.IntegerField(default=0, help_text="Chhota number pehle dikhega")
+    emoji = models.CharField(max_length=10)
+    label = models.CharField(max_length=100)
+    order = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['order']
